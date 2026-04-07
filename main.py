@@ -43,7 +43,8 @@ if emp_file and att_file:
     # -------------------------------
     # FIXED HEIGHT
     # -------------------------------
-    CHART_HEIGHT = 350
+    CHART_WIDTH = 6
+    CHART_HEIGHT =4.5
 
     # -------------------------------
     # DASHBOARD
@@ -61,13 +62,15 @@ if emp_file and att_file:
     with row1_col1:
         st.write("### 🥧 Attendance")
 
-        fig1, ax1 = plt.subplots(figsize=(4, 4))
+        fig1, ax1 = plt.subplots(figsize=(CHART_WIDTH, CHART_HEIGHT))
         ax1.pie(
             [present_total, absent_total],
             labels=["Present", "Absent"],
             autopct='%1.1f%%',
             colors=["#2E86C1", "#E74C3C"]
         )
+        ax1.set_aspect('auto')  # ✅ KEY FIX (not equal)
+
 
         st.pyplot(fig1, width='stretch')
 
@@ -75,7 +78,7 @@ if emp_file and att_file:
     with row1_col2:
         st.write("### 💸 Salary Loss")
 
-        fig2, ax2 = plt.subplots(figsize=(6, 3.5))
+        fig2, ax2 = plt.subplots(figsize=(CHART_WIDTH, CHART_HEIGHT))
 
         ax2.bar(
             display_data['employee_name'],
@@ -97,7 +100,7 @@ if emp_file and att_file:
     with row2_col1:
         st.write("### 💰 Salary Compare")
 
-        fig3, ax3 = plt.subplots(figsize=(6, 3.5))
+        fig3, ax3 = plt.subplots(figsize=(CHART_WIDTH, CHART_HEIGHT))
 
         x = range(len(display_data))
 
@@ -134,10 +137,10 @@ if emp_file and att_file:
     # 📋 QUICK TABLE (MATCH HEIGHT)
     with row2_col2:
         st.write("### 📋 Quick View")
-
+        TABLE_HEIGHT = int(CHART_HEIGHT * 100)  # ~350px
         st.dataframe(
             display_data[['employee_name', 'present_days', 'absent_days', 'final_salary']],
-            height=CHART_HEIGHT,
+            height=TABLE_HEIGHT,
             width='stretch'
         )
 
